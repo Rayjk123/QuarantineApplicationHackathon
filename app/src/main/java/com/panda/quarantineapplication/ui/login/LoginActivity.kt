@@ -1,11 +1,7 @@
 package com.panda.quarantineapplication.ui.login
 
 import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -14,8 +10,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.panda.quarantineapplication.R
+import io.radar.sdk.Radar
 
 class LoginActivity : AppCompatActivity() {
 
@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Radar.initialize(this, "prj_live_pk_8440ebb4edeb83015a30e26e3f0b292de8b98bc4")
 
         setContentView(R.layout.activity_login)
 
