@@ -37,12 +37,20 @@ public class LoginActivity : AppCompatActivity() {
                             println("Request Successful!!")
                             println(json)
                             val validUser = json.getBoolean("validUser")
+                            val isAdmin = json.getBoolean("isAdmin")
                             Toast.makeText(this@LoginActivity,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                             if (validUser) {
                                 Radar.setUserId(json.getJSONObject("user").getJSONObject("Item").getString("phoneNumber"))
                                 user = json.getJSONObject("user")
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(intent)
+                                if (isAdmin) {
+                                    val intent =
+                                        Intent(this@LoginActivity, ViolationActivity::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val intent =
+                                        Intent(this@LoginActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                }
                             }
                         } catch (e: JSONException) {
                             Toast.makeText(this@LoginActivity,"Login Failed",Toast.LENGTH_SHORT).show()
