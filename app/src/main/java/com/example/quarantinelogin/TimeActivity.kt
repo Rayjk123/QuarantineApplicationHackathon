@@ -43,6 +43,10 @@ class TimeActivity : AppCompatActivity() {
                 val QuarantineEndTimeInMilliseconds = response.body?.string()?.toInt()
                 runOnUiThread{
                     try {
+                        // TODO Get Time Left = QuarantineEndTimeInMilliseconds - CURRENT TIME IN MILLISECONDS
+
+                        // TODO DISPLAY TIME LEFT IN TEXT FORMAT ON SCREEN
+
                         println("Request Successful to Get Quarantine Time!")
                         println(QuarantineEndTimeInMilliseconds)
                         Toast.makeText(this@TimeActivity,"Created Geofence Successfully",Toast.LENGTH_SHORT).show()
