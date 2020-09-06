@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
                             val isAdmin = json.getBoolean("isAdmin")
                             Toast.makeText(this@LoginActivity,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                             if (validUser) {
+                                Radar.setUserId(json.getJSONObject("user").getJSONObject("Item").getString("phoneNumber"))
                                 if (isAdmin) {
                                     val intent =
                                         Intent(this@LoginActivity, ViolationActivity::class.java)
