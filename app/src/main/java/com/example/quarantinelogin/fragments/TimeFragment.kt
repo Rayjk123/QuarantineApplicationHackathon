@@ -12,6 +12,8 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import org.json.JSONException
 import java.io.IOException
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -44,6 +46,23 @@ class TimeFragment : Fragment() {
                     activity?.runOnUiThread {
                         try {
                             // TODO Get Time Left = QuarantineEndTimeInMilliseconds - CURRENT TIME IN MILLISECONDS
+                            val calendar = Calendar.getInstance()
+                            val currentTime = calendar.timeInMillis
+                            val timeLeft = QuarantineEndTimeInMilliseconds - currentTime
+                            println("Time Left is: $timeLeft")
+
+                            val daysLeft = String.format("%02d", TimeUnit.MILLISECONDS.toDays(timeLeft))
+                            val hoursLeft = String.format("%02d", TimeUnit.MILLISECONDS.toHours(timeLeft)-
+                                    TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(timeLeft)))
+                            val minutesLeft = String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(timeLeft) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeLeft)))
+                            val secondsLeft = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(timeLeft) -
+                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeLeft)))
+
+                            val timer = "$daysLeft days $hoursLeft hours $minutesLeft minutes $secondsLeft seconds"
+                            println("$timer")
+
+
 
                             // TODO DISPLAY TIME LEFT IN TEXT FORMAT ON SCREEN
 
