@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.quarantinelogin.LoginActivity
+import com.example.quarantinelogin.MainActivity
 import com.example.quarantinelogin.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,10 +22,21 @@ class GoogleMapsFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val callback = OnMapReadyCallback { googleMap ->
-        val latitude = LoginActivity.Companion.user?.getJSONObject("Item")
-            ?.getJSONObject("latitude")?.getDouble("N")
-        val longitude = LoginActivity.Companion.user?.getJSONObject("Item")
-            ?.getJSONObject("longitude")?.getDouble("N")
+        var latitude: Double? = null
+        var longitude: Double? = null
+        try {
+            latitude = LoginActivity.Companion.user?.getJSONObject("Item")
+                ?.getJSONObject("latitude")?.getDouble("N")
+            longitude = LoginActivity.Companion.user?.getJSONObject("Item")
+                ?.getJSONObject("longitude")?.getDouble("N")
+        } catch (error: Exception) {
+            println("Silently fail due to no issue")
+        }
+
+        if (latitude == null || longitude == null) {
+            latitude = MainActivity.Companion.latitude
+            longitude = MainActivity.Companion.longitude
+        }
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.

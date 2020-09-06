@@ -28,6 +28,11 @@ class MainActivity : AppCompatActivity() {
     val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
     var client = OkHttpClient()
 
+    companion object {
+        var longitude: Double? = null;
+        var latitude: Double? = null;
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,9 +62,12 @@ class MainActivity : AppCompatActivity() {
                 println("location: $location , and Status: $status")
                 if (location != null) {
                     println("Latitude: " + location.latitude + " Longitude: " + location.longitude)
+                    longitude = location.longitude
+                    latitude = location.latitude
                 }
                 val phoneNumber = LoginActivity.Companion.user?.getJSONObject("Item")
                     ?.getJSONObject("phoneNumber")?.getString("S")
+
 
                 if (location != null) {
                     startGeoFencing(
