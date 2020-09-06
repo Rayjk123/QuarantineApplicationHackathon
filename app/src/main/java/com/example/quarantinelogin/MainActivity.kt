@@ -15,7 +15,6 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
 
 
@@ -44,8 +43,7 @@ class MainActivity : AppCompatActivity() {
                 if (location != null) {
                     println("Latitude: " + location.latitude + " Longitude: " + location.longitude)
                 }
-                val LoginActivity = LoginActivity()
-                val phoneNumber = LoginActivity.user?.getJSONObject("Item")?.getString("phoneNumber")
+                val phoneNumber = LoginActivity.Companion.user?.getJSONObject("Item")?.getJSONObject("phoneNumber")?.getString("S")
 
                 if (location != null) {
                     startGeoFencing(phoneNumber, location.longitude, location.latitude, object: Callback {

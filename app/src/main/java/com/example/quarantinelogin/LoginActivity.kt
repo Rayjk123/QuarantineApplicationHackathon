@@ -15,7 +15,9 @@ import java.io.IOException
 
 
 public class LoginActivity : AppCompatActivity() {
-    public var user: JSONObject? = null;
+    companion object {
+        var user: JSONObject? = null;
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
