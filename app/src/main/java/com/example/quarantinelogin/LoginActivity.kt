@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
                             val validUser = json.getBoolean("validUser")
                             Toast.makeText(this@LoginActivity,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                             if (validUser) {
+                                Radar.setUserId(json.getJSONObject("user").getJSONObject("Item").getString("phoneNumber"))
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
                             }

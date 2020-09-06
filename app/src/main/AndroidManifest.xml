@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.quarantinelogin">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.INTERNET" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:remove="android:maxSdkVersion"/>
 
     <application
         android:allowBackup="true"
