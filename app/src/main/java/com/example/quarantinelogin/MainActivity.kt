@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.radar.sdk.Radar
+import io.radar.sdk.RadarTrackingOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
             //start your next activity
             startActivity(intent)
         }
+
+        Radar.startTracking(RadarTrackingOptions.CONTINUOUS)
 
         start_btn.setOnClickListener {
             Radar.getLocation { status, location, stopped ->
