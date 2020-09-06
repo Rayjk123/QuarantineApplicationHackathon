@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".TimeActivity">
+    tools:context=".ViolationActivity">
 
     <FrameLayout
         android:id="@+id/fl_wrapper"
@@ -22,7 +22,7 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="#fff"
         app:itemTextColor="#fff"
-        app:menu="@menu/time_menu" />
+        app:menu="@menu/violation_menu" />
 
     <!--<TextView
         android:layout_width="wrap_content"
