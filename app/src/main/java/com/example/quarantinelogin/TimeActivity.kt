@@ -40,20 +40,33 @@ class TimeActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val QuarantineEndTimeInMilliseconds = response.body?.string()?.toInt()
-                runOnUiThread{
-                    try {
-                        // TODO Get Time Left = QuarantineEndTimeInMilliseconds - CURRENT TIME IN MILLISECONDS
+                val body = response.body?.string()
+                println(body)
+                if (body != null) {
+                    val QuarantineEndTimeInMilliseconds = body.toLong()
 
-                        // TODO DISPLAY TIME LEFT IN TEXT FORMAT ON SCREEN
+                    runOnUiThread {
+                        try {
+                            // TODO Get Time Left = QuarantineEndTimeInMilliseconds - CURRENT TIME IN MILLISECONDS
 
-                        println("Request Successful to Get Quarantine Time!")
-                        println(QuarantineEndTimeInMilliseconds)
-                        Toast.makeText(this@TimeActivity,"Created Geofence Successfully",Toast.LENGTH_SHORT).show()
+                            // TODO DISPLAY TIME LEFT IN TEXT FORMAT ON SCREEN
 
-                    } catch (e: JSONException) {
-                        Toast.makeText(this@TimeActivity,"An Error occurred while creating the Geofence. Please try again.",Toast.LENGTH_SHORT).show()
-                        e.printStackTrace()
+                            println("Request Successful to Get Quarantine Time!")
+                            println(QuarantineEndTimeInMilliseconds)
+                            Toast.makeText(
+                                this@TimeActivity,
+                                "Created Geofence Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        } catch (e: JSONException) {
+                            Toast.makeText(
+                                this@TimeActivity,
+                                "An Error occurred while creating the Geofence. Please try again.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            e.printStackTrace()
+                        }
                     }
                 }
             }

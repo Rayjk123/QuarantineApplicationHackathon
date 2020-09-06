@@ -36,37 +36,59 @@ class MainActivity : AppCompatActivity() {
         showAccessNetworkStatePermission()
         showReceiveBootPermission()
         showAccessBackgroundLocationPermission()
+        val timeLeft =
+            LoginActivity.Companion.user?.getJSONObject("Item")?.getJSONObject("quarantineTime")
+                ?.getDouble("N")
+        if (timeLeft != null) {
+            val intent = Intent(this, TimeActivity::class.java)
+            //start your next activity
+            startActivity(intent)
+        }
 
         start_btn.setOnClickListener {
-            Radar.getLocation  { status, location, stopped ->
+            Radar.getLocation { status, location, stopped ->
                 println("location: $location , and Status: $status")
                 if (location != null) {
                     println("Latitude: " + location.latitude + " Longitude: " + location.longitude)
                 }
-                val phoneNumber = LoginActivity.Companion.user?.getJSONObject("Item")?.getJSONObject("phoneNumber")?.getString("S")
+                val phoneNumber = LoginActivity.Companion.user?.getJSONObject("Item")
+                    ?.getJSONObject("phoneNumber")?.getString("S")
 
                 if (location != null) {
-                    startGeoFencing(phoneNumber, location.longitude, location.latitude, object: Callback {
-                        override fun onFailure(call: Call, e: IOException) {
-                            println("Request Failure.")
-                        }
+                    startGeoFencing(
+                        phoneNumber,
+                        location.longitude,
+                        location.latitude,
+                        object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                println("Request Failure.")
+                            }
 
-                        override fun onResponse(call: Call, response: Response) {
-                            val responseData = response.body?.string()
-                            runOnUiThread{
-                                try {
-                                    println("Request Successful to Put Geofence!")
-                                    println(responseData)
-                                    Toast.makeText(this@MainActivity,"Created Geofence Successfully",Toast.LENGTH_SHORT).show()
+                            override fun onResponse(call: Call, response: Response) {
+                                val responseData = response.body?.string()
+                                runOnUiThread {
+                                    try {
+                                        println("Request Successful to Put Geofence!")
+                                        println(responseData)
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "Created Geofence Successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
-                                } catch (e: JSONException) {
-                                    Toast.makeText(this@MainActivity,"An Error occurred while creating the Geofence. Please try again.",Toast.LENGTH_SHORT).show()
-                                    e.printStackTrace()
+                                    } catch (e: JSONException) {
+                                        Toast.makeText(
+                                            this@MainActivity,
+                                            "An Error occurred while creating the Geofence. Please try again.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        e.printStackTrace()
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
                 }
+
             }
 
             val intent = Intent(this, TimeActivity::class.java)
@@ -78,8 +100,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Throws(IOException::class)
-    fun startGeoFencing(phoneNumber: String?, longitude: Double, latitude: Double, callback: Callback): Unit {
-        val putBody = "{\"phoneNumber\":\"$phoneNumber\", \"longitude\":\"$longitude\", \"latitude\":\"$latitude\"}"
+    fun startGeoFencing(
+        phoneNumber: String?,
+        longitude: Double,
+        latitude: Double,
+        callback: Callback
+    ): Unit {
+        val putBody =
+            "{\"phoneNumber\":\"$phoneNumber\", \"longitude\":\"$longitude\", \"latitude\":\"$latitude\"}"
         val request = Request.Builder()
             .url("https://e2d600v4b3.execute-api.us-east-1.amazonaws.com/dev/geofence")
             .put(putBody.toRequestBody(JSON))
@@ -88,14 +116,18 @@ class MainActivity : AppCompatActivity() {
         return client.newCall(request).enqueue(callback)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             INTERNET_REQUEST_CODE -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Toast.makeText(this@MainActivity, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                ) {
+                    Toast.makeText(this@MainActivity, "Permission Granted!", Toast.LENGTH_SHORT)
+                        .show();
                     // Permission is granted. Continue the action or workflow
                     // in your app.
                 } else {
