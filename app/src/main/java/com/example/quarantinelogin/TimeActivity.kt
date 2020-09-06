@@ -12,6 +12,8 @@ class TimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time)
 
+
+
         val timeFragment = TimeFragment()
         val mapFragment = GoogleMapsFragment()
 

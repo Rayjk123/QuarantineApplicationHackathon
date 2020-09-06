@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.quarantinelogin.LoginActivity
@@ -22,6 +24,7 @@ import java.util.concurrent.TimeUnit
  * create an instance of this fragment.
  */
 class TimeFragment : Fragment() {
+
     val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
     var client = OkHttpClient()
 
@@ -30,6 +33,8 @@ class TimeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view: View = inflater.inflate(R.layout.fragment_time, container, false)
+        val timerTextView: TextView = view.findViewById(R.id.timeLeftTextView) as TextView
         // Inflate the layout for this fragment
         val phoneNumber = LoginActivity.Companion.user?.getJSONObject("Item")?.getJSONObject("phoneNumber")?.getString("S")
         getQuarantineEndTime(phoneNumber, object: Callback {
@@ -60,6 +65,7 @@ class TimeFragment : Fragment() {
                                     TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeLeft)))
 
                             val timer = "$daysLeft days $hoursLeft hours $minutesLeft minutes $secondsLeft seconds"
+                            timerTextView.text = timer
                             println("$timer")
 
 
@@ -86,7 +92,7 @@ class TimeFragment : Fragment() {
                 }
             }
         })
-        return inflater.inflate(R.layout.fragment_time, container, false)
+        return view
     }
 
 
