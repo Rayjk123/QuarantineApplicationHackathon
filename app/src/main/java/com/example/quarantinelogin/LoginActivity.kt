@@ -40,8 +40,8 @@ public class LoginActivity : AppCompatActivity() {
                             println(json)
                             val validUser = json.getBoolean("validUser")
                             val isAdmin = json.getBoolean("isAdmin")
-                            Toast.makeText(this@LoginActivity,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                             if (validUser) {
+                                Toast.makeText(this@LoginActivity,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                                 Radar.setUserId(json.getJSONObject("user").getJSONObject("Item").getString("phoneNumber"))
                                 user = json.getJSONObject("user")
                                 if (isAdmin) {

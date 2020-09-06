@@ -37,13 +37,17 @@ class MainActivity : AppCompatActivity() {
         showAccessNetworkStatePermission()
         showReceiveBootPermission()
         showAccessBackgroundLocationPermission()
-        val timeLeft =
-            LoginActivity.Companion.user?.getJSONObject("Item")?.getJSONObject("quarantineTime")
-                ?.getDouble("N")
-        if (timeLeft != null) {
-            val intent = Intent(this, TimeActivity::class.java)
-            //start your next activity
-            startActivity(intent)
+        try {
+            val timeLeft =
+                LoginActivity.Companion.user?.getJSONObject("Item")?.getJSONObject("quarantineTime")
+                    ?.getDouble("N")
+            if (timeLeft != null) {
+                val intent = Intent(this, TimeActivity::class.java)
+                //start your next activity
+                startActivity(intent)
+            }
+        } catch(error: Exception) {
+            println("Silently fail due to it just being a new user")
         }
 
         Radar.startTracking(RadarTrackingOptions.CONTINUOUS)
@@ -78,6 +82,9 @@ class MainActivity : AppCompatActivity() {
                                             "Created Geofence Successfully",
                                             Toast.LENGTH_SHORT
                                         ).show()
+                                        val intent = Intent(this@MainActivity, TimeActivity::class.java)
+                                        //start your next activity
+                                        startActivity(intent)
 
                                     } catch (e: JSONException) {
                                         Toast.makeText(
@@ -93,10 +100,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-
-            val intent = Intent(this, TimeActivity::class.java)
-            //start your next activity
-            startActivity(intent)
         }
 
 
