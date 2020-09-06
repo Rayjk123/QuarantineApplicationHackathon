@@ -14,7 +14,8 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class LoginActivity : AppCompatActivity() {
+public class LoginActivity : AppCompatActivity() {
+    public var user: JSONObject? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.makeText(this@LoginActivity,"Logged In Successfully",Toast.LENGTH_SHORT).show()
                             if (validUser) {
                                 Radar.setUserId(json.getJSONObject("user").getJSONObject("Item").getString("phoneNumber"))
+                                user = json.getJSONObject("user")
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
                             }

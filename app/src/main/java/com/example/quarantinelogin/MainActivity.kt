@@ -11,6 +11,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.radar.sdk.Radar
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     public val ACCESS_NETWORK_STATE_CODE = 3;
     public val RECEIVE_BOOT_COMPLETED_CODE = 4;
     public val ACCESS_BACKGROUND_LOCATION_CODE = 5;
+    val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
+    var client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,31 @@ class MainActivity : AppCompatActivity() {
                 if (location != null) {
                     println("Latitude: " + location.latitude + " Longitude: " + location.longitude)
                 }
+                val LoginActivity = LoginActivity()
+                val phoneNumber = LoginActivity.user?.getJSONObject("Item")?.getString("phoneNumber")
+
+                if (location != null) {
+                    startGeoFencing(phoneNumber, location.longitude, location.latitude, object: Callback {
+                        override fun onFailure(call: Call, e: IOException) {
+                            println("Request Failure.")
+                        }
+
+                        override fun onResponse(call: Call, response: Response) {
+                            val responseData = response.body?.string()
+                            runOnUiThread{
+                                try {
+                                    println("Request Successful to Put Geofence!")
+                                    println(responseData)
+                                    Toast.makeText(this@MainActivity,"Created Geofence Successfully",Toast.LENGTH_SHORT).show()
+
+                                } catch (e: JSONException) {
+                                    Toast.makeText(this@MainActivity,"An Error occurred while creating the Geofence. Please try again.",Toast.LENGTH_SHORT).show()
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+                    });
+                }
             }
 
             val intent = Intent(this, TimeActivity::class.java)
@@ -44,6 +77,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    @Throws(IOException::class)
+    fun startGeoFencing(phoneNumber: String?, longitude: Double, latitude: Double, callback: Callback): Unit {
+        val putBody = "{\"phoneNumber\":\"$phoneNumber\", \"longitude\":\"$longitude\", \"latitude\":\"$latitude\"}"
+        val request = Request.Builder()
+            .url("https://e2d600v4b3.execute-api.us-east-1.amazonaws.com/dev/geofence")
+            .put(putBody.toRequestBody(JSON))
+            .build()
+
+        return client.newCall(request).enqueue(callback)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
