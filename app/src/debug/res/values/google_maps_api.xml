@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=D8:5C:FF:C8:1B:1F:0D:B9:EB:BA:C0:AD:B8:03:7C:9F:56:39:84:F9%3Bcom.panda.quarantineapplication
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.panda.quarantineapplication
+
+    SHA-1 certificate fingerprint:
+    D8:5C:FF:C8:1B:1F:0D:B9:EB:BA:C0:AD:B8:03:7C:9F:56:39:84:F9
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDPm57HdE4ttxv8DD2KkGt5U_Pt2PlX8M8</string>
+</resources>

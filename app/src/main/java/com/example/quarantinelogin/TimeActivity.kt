@@ -3,7 +3,7 @@ package com.example.quarantinelogin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.quarantinelogin.fragments.MapFragment
+import com.example.quarantinelogin.fragments.GoogleMapsFragment
 import com.example.quarantinelogin.fragments.TimeFragment
 import kotlinx.android.synthetic.main.activity_time.*
 
@@ -13,7 +13,7 @@ class TimeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_time)
 
         val timeFragment = TimeFragment()
-        val mapFragment = MapFragment()
+        val mapFragment = GoogleMapsFragment()
 
         makeCurrentFragment(timeFragment)
 
