@@ -12,6 +12,10 @@ The application heavily leverages Radar.io to track users and create a geofence 
 ## Architecture Diagram
 ![](images/ArchitecutureDiagram.PNG)
 
+## Radar.io usage
+![](images/ProofOfGeofences.PNG)
+![](images/ProofOfUsers.PNG)
+
 ## Backend
 [Backend Repository](https://github.com/Rayjk123/quarantine-application-hackathon-backend)
 
